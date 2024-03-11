@@ -114,64 +114,6 @@ public class UserServiceClientPactTest {
         }).isInstanceOf(HttpClientErrorException.class);
     }
 
-   /* @Pact(consumer = "user-service-omni-client")
-    public RequestResponsePact createUserWithInvalidEmail(PactDslWithProvider builder)
-            throws JsonProcessingException {
-
-        DslPart responseBody =
-                newJsonBody(
-                        (body) -> {
-                            body.stringType("type", "about:blank");
-                            body.stringType("title", "Bad Request");
-                            body.stringType("status", "400");
-                            body.stringType("detail","Invalid request content.");
-                            body.stringType("instance","/api/users");
-                            body.minArrayLike("violations",1, violation -> {
-                                violation.stringType("object","createUserRequest");
-                                violation.stringType("field","email");
-                                violation.stringType("rejectedValue","Ellentest.com");
-                                violation.stringType("message","Invalid email format");
-                            });
-                            body.stringType("id","f98809ee-f302-4c80-a69b-0b7c90b366ab");
-                            body.stringType("timestamp","2024-03-10T08:27:05.984");
-                            body.stringType("x-correlation-id","");
-                        })
-                        .build();
-
-        return builder
-                .given("the user service is up and running")
-                .uponReceiving("a request to create a new user with invalid email")
-                .path("/api/users")
-                .method("POST")
-                .body(mapper.writeValueAsString(createUserInvalidEmailCommand()))
-                .willRespondWith()
-                .body(responseBody)
-                .status(400)
-                .toPact();
-    }
-
-    @Test
-    @PactTestFor(pactMethod = "createUserWithInvalidEmail", pactVersion = PactSpecVersion.V3)
-    void shouldFailToCreateUserWithInvalidEmail(MockServer mockServer) {
-        UserClient userClient = userClient(mockServer.getUrl());
-
-        assertThatThrownBy( () -> {
-            userClient.createUser(createUserInvalidEmailCommand());
-        }).isInstanceOf(HttpClientErrorException.class);
-    }
-
-
-   private UserClient userClient(String baseUrl) {
-            RestClient client = RestClient.builder()
-                    .requestFactory(httpComponentsClientHttpRequestFactory)
-                    .baseUrl(baseUrl)
-                    .build();
-
-            HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(RestClientAdapter.create(client))
-                    .build();
-           return factory.createClient(UserClient.class);
-    }*/
-
     private CreateUserCommand createUserValidCommand() {
         return new CreateUserCommand("Ellen",21,"Ellen@test.com");
     }
